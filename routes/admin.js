@@ -1,4 +1,3 @@
-
 const express = require("express");
 
 const jwt = require("jsonwebtoken");
@@ -7,7 +6,7 @@ const bcrypt = require("bcrypt");
 
 const {z} = require("zod");
 
-const { adminModel, purchaseModel, courseModel } = require("../db");
+const { adminModel, courseModel } = require("../db");
 
 const {JWT_ADMIN_SECRET} = require("../config");
 
@@ -19,6 +18,9 @@ const adminRouter = Router();
 
 
 adminRouter.post("/signup", async function(req, res){
+    console.log("--- Admin signup route hit ---");
+    console.log("Request Body:", req.body);
+
     const requiredBody = z.object({
         email: z.string().min(3).max(100).email(),
         firstName: z.string().min(3).max(100),
@@ -65,10 +67,14 @@ adminRouter.post("/signin", async function(req, res){
     const admin = await adminModel.findOne({
         email: email
     });
-
+    if (!admin) {
+        return res.status(403).json({
+            message: "Incorrect credentials"
+        });
+    }
     const passwordMatch = await bcrypt.compare(password, admin.password);
 
-    if (admin && passwordMatch) {
+    if (passwordMatch) {
         const token = jwt.sign({
             id: admin._id.toString()
         }, JWT_ADMIN_SECRET)
@@ -78,10 +84,9 @@ adminRouter.post("/signin", async function(req, res){
         })
     } else {
         res.status(403).json({
-            message: "Incorrect creds"
+            message: "Incorrect credentials",
         })
     }
-
 });
 
 // this route is used to create courses by admin

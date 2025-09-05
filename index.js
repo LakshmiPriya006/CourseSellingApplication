@@ -9,10 +9,14 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 dotenv.config();
 
+const cors = require("cors");
+
 const {userRouter} = require("./routes/user")
 const {courseRouter} = require("./routes/course");
 const {adminRouter} = require("./routes/admin");
 
+
+app.use(cors());
 app.use(express.json());
 
 app.use("/user", userRouter)
@@ -20,12 +24,12 @@ app.use("/courses", courseRouter)
 app.use("/admin", adminRouter)
 
 app.get("/", function(req, res){
-    sendFile(__dirname + "/public/index.html")
+    res.sendFile(__dirname + "/course-selling-app-fe")
 })
 
 async function main(){
-    await mongoose.connect(process.env.MONGO_URL);
-
+    const connect = await mongoose.connect(process.env.MONGO_URL);
+    console.log(`Database connected ${connect.connection.host}`)
     const port = process.env.PORT; // real app 
 
     app.listen(port, () => {
