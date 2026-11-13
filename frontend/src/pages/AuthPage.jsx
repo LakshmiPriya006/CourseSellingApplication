@@ -23,8 +23,8 @@ const AuthPage = ({ setIsAuthenticated, setUserType }) => {
 
     // 1. Determine the endpoint based on User Type (user vs admin) and Action (signin vs signup)
     const endpoint = isSignIn
-      ? `http://localhost:3000/${userTypeSelect}/signin`
-      : `http://localhost:3000/${userTypeSelect}/signup`;
+      ? `/${userTypeSelect}/signin`
+      : `/${userTypeSelect}/signup`;
 
     try {
       console.log('Attempting to authenticate:', { endpoint, userType: userTypeSelect, isSignIn });

@@ -28,7 +28,7 @@ const AdminDashboard = () => {
     const fetchAdminCourses = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get("http://localhost:3000/admin/course/bulk", {
+        const response = await axios.get("/admin/course/bulk", {
           headers: { token: token } // Send the token!
         });
         const coursesData = response.data.courses || [];
@@ -48,13 +48,13 @@ const AdminDashboard = () => {
 
     if (editingCourse) {
       // Logic for edit (PUT request)
-      await axios.put("http://localhost:3000/admin/course", {
+      await axios.put("/admin/course", {
         courseId: editingCourse._id, // MongoDB uses _id, not id
         ...formData
       }, { headers: { token } });
     } else {
       // Logic for create (POST request)
-      const response = await axios.post("http://localhost:3000/admin/course", formData, {
+      const response = await axios.post("/admin/course", formData, {
         headers: { token }
       });
       // Add the new course to the local list so the UI updates immediately
@@ -74,7 +74,7 @@ const AdminDashboard = () => {
   if(confirm("Are you sure you want to delete this course?")) {
     try {
       // You need to add this DELETE route to your backend first!
-      // await axios.delete(`http://localhost:3000/admin/course/${courseId}`, { headers: { token } });
+      // await axios.delete(`/admin/course/${courseId}`, { headers: { token } });
       
       // For now, just update UI using _id
       setCourses(courses.filter(c => c._id !== courseId)); 

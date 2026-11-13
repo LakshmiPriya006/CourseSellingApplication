@@ -23,7 +23,7 @@ const CoursePreview = ({ isAuthenticated = false, userType = 'user' }) => {
     setPurchasing(true);
     try {
       const token = localStorage.getItem('token');
-      await axios.post("http://localhost:3000/courses/purchase", 
+      await axios.post("/courses/purchase", 
         { courseId: id },
         { headers: { token } }
       );
@@ -46,7 +46,7 @@ const CoursePreview = ({ isAuthenticated = false, userType = 'user' }) => {
   useEffect(() => {
     const fetchCourse = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/courses/preview");
+        const response = await axios.get("/courses/preview");
         const courses = response.data.courses || [];
         const foundCourse = courses.find(c => c._id === id);
         setCourse(foundCourse);

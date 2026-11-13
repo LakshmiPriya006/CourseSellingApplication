@@ -10,7 +10,7 @@ const UserDashboard = () => {
     const fetchPurchases = async () => {
       const token = localStorage.getItem('token');
       try {
-        const response = await axios.get("http://localhost:3000/user/purchases", {
+        const response = await axios.get("/user/purchases", {
           headers: { token }
         });
         // The backend returns { purchases, coursesData }

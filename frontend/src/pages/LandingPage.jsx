@@ -16,7 +16,7 @@ const LandingPage = ({ isAuthenticated = false, userType = 'user' }) => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/courses/preview");
+        const response = await axios.get("/courses/preview");
         setCourses(response.data.courses || []);
       } catch (error) {
         console.error("Error fetching courses:", error);
@@ -29,7 +29,7 @@ const LandingPage = ({ isAuthenticated = false, userType = 'user' }) => {
       if (isAuthenticated && userType === 'admin') {
         try {
           const token = localStorage.getItem('token');
-          const coursesResponse = await axios.get("http://localhost:3000/admin/course/bulk", {
+          const coursesResponse = await axios.get("/admin/course/bulk", {
             headers: { token }
           });
           const instructorCoursesData = coursesResponse.data.courses || [];

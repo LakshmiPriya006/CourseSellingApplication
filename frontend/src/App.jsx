@@ -25,7 +25,7 @@ function AppContent() {
         // Optional: Validate token with backend
         try {
           // You can add a token validation endpoint here if needed
-          // const response = await axios.get(`http://localhost:3000/${storedUserType}/validate`, {
+          // const response = await axios.get(`/${storedUserType}/validate`, {
           //   headers: { token }
           // });
           
